@@ -1,9 +1,0 @@
-asciidoc: {}
-asciidoctor:
-  safe: unsafe
-  attributes:
-    - source-highlighter=coderay
-    - icons=font
-plugins:
-- jekyll-asciidoc
-
