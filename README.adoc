@@ -9,7 +9,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-= Sockets
+= Sockets image:https://github.com/manoelcampos/sd-java-socket-chat/workflows/maven/badge.svg[]
 
 Projetos apresentando conceitos básicos como `Sockets`, `InputStream` e `OutputStream`, além do uso de `Threads`
 no desenvolvimento de aplicações de chat. 
