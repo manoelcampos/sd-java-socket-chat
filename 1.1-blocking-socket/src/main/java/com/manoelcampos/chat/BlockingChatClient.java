@@ -71,50 +71,26 @@ public class BlockingChatClient implements Runnable {
      *                     ou o cliente não tem acesso à rede.
      */
     private void start() throws IOException {
-        Socket socket = new Socket(SERVER_ADDRESS, BlockingChatServer.PORT);
+        final Socket socket = new Socket(SERVER_ADDRESS, BlockingChatServer.PORT);
         clientSocket = new ClientSocket(socket);
         System.out.println(
             "Cliente conectado ao servidor no endereço " + SERVER_ADDRESS +
             " e porta " + BlockingChatServer.PORT);
-        
-        //Inicia o loop de espera por mensagens enviadas pelo servidor
+
+        new Thread(this).start();
         messageLoop();
     }
 
     /**
      * Inicia o loop de envio e recebimento de mensagens.
      * O loop é interrompido quando o usuário digitar "sair".
-     * @throws IOException quando um erro de I/O (Input/Output, ou seja,
-     *                     Entrada/Saída) ocorrer, como quando o cliente tentar
-     *                     enviar uma mensagem mas não conseguir, porque a conexão
-     *                     ou do servidor caiu (por exemplo)
      */
-    private void messageLoop() throws IOException {
-        System.out.print("Digite seu login: ");
-        String msg = scanner.nextLine();
-        final String resposta = clientSocket.sendMsgAndGetResponse("login " + msg);
-        System.out.println("Servidor diz: " + resposta);
-
-        /*
-        Cria uma Thread separada para aguardar mensagens enviadas pelo servidor.
-        Com isto, evitamos que o processo de envio de mensagens (que é bloqueante
-        por natureza, uma vez que ele espera o usuário digitar dados)
-        interrompa o processo de recebimento (que também é bloqueante
-        quando não houver nenhuma mensagem a ser recebida).
-        
-        Como nossa classe implementa a interface Runnable,
-        para criar a thread e fazê-la executar o método run(),
-        basta passarmos this para indicar que o objeto atual da classe BlockingChatClient
-        é um objeto Runnable, ou seja, ele possui um método run()
-        que será chamado quando a thread for executada.
-        */
-        new Thread(this).start();
-
-        //Inicia o loop de envio de mensagens digitadas pelo usuário
+    private void messageLoop() {
+        String msg;
         do {
-            System.out.print("Digite uma mensagem (ou 'sair' para encerrar): ");
+            System.out.print("Digite uma msg (ou 'sair' para encerrar): ");
             msg = scanner.nextLine();
-            clientSocket.sendMsg("msg " + msg);
+            clientSocket.sendMsg(msg);
         } while(!"sair".equalsIgnoreCase(msg));
         clientSocket.close();
     }
@@ -137,7 +113,7 @@ public class BlockingChatClient implements Runnable {
     public void run() {
         String msg;
         while((msg = clientSocket.getMessage())!=null) {
-            System.out.println("\nServidor diz: " + msg);
+            System.out.println("Servidor diz: " + msg);
         }
     }
 }
