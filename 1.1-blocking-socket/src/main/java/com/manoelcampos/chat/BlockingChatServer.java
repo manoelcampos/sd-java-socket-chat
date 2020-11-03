@@ -3,8 +3,8 @@ package com.manoelcampos.chat;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ public class BlockingChatServer {
     private final List<ClientSocket> clientSocketList;
 
     public BlockingChatServer() {
-        clientSocketList = new ArrayList<>();
+        clientSocketList = new LinkedList<>();
     }
 
     /**

@@ -136,7 +136,7 @@ public class BlockingChatClient implements Runnable {
     @Override
     public void run() {
         String msg;
-        while(!clientSocket.getSocket().isClosed() && (msg = clientSocket.getMessage())!=null) {
+        while((msg = clientSocket.getMessage())!=null) {
             System.out.println("\nServidor diz: " + msg);
         }
     }
