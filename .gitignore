@@ -1,4 +1,6 @@
 .DS_Store
-/target/
+target/
+
+#Arquivos IntelliJ
 .idea/
-/1.1-blocking-socket/target/
+*.iml
