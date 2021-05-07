@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Manoel Campos da Silva Filho
  */
-public class BlockingChatServer {
+public class BlockingChatServerApp {
     /**
      * Porta na qual o servidor vai ficar escutando (aguardando conexões dos clientes).
      * Em um determinado computador só pode haver uma única aplicação servidora
@@ -31,7 +31,7 @@ public class BlockingChatServer {
      */
     private final List<ClientSocket> clientSocketList;
 
-    public BlockingChatServer() {
+    public BlockingChatServerApp() {
         clientSocketList = new LinkedList<>();
     }
 
@@ -41,7 +41,7 @@ public class BlockingChatServer {
      * @param args parâmetros de linha de comando (não usados para esta aplicação)
      */
     public static void main(String[] args) {
-        final BlockingChatServer server = new BlockingChatServer();
+        final BlockingChatServerApp server = new BlockingChatServerApp();
         try {
             server.start();
         } catch (IOException e) {
@@ -126,6 +126,7 @@ public class BlockingChatServer {
             String msg;
             while((msg = clientSocket.getMessage()) != null){
                 System.out.println("Mensagem recebida do cliente "+ clientSocket.getRemoteSocketAddress() +": " + msg);
+
                 if("sair".equalsIgnoreCase(msg)){
                     return;
                 }
@@ -152,7 +153,7 @@ public class BlockingChatServer {
      * </p>
      * 
      * @param sender cliente que enviou a mensagem
-     * @param msg mensagem recebida
+     * @param msg mensagem recebida. Exemplo de mensagem: "Olá pessoal"
      */
     private void sendMsgToAll(final ClientSocket sender, final String msg) {
         final Iterator<ClientSocket> iterator = clientSocketList.iterator();

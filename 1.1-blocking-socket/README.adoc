@@ -2,18 +2,22 @@
 
 Este é um projeto Java que mostra a forma mais básica
 de criar uma aplicação de chat cliente/servidor utilizando as
-classes `ServerSocket` e `Socket` que vêm desde a primeira versão 
+classes `ServerSocket` e `Socket`, que vêm desde a primeira versão
 da linguagem Java.
 
 O projeto é composto por duas aplicações console:
 
-- link:src/main/java/com/manoelcampos/chat/ChatClient.java[Cliente]
-- link:src/main/java/com/manoelcampos/chat/ChatServer.java[Servidor]
+- link:src/main/java/com/manoelcampos/chat/BlockingChatClientApp.java[Cliente]
+- link:src/main/java/com/manoelcampos/chat/BlockingChatServerApp.java[Servidor]
 
 As classes utilizadas só permitem requisições bloqueantes (blocking),
 ou seja requisições síncronas onde a aplicação fica parada à espera
 de uma resposta. Desta forma, os métodos utilizados para realizar uma
 conexão, enviar e receber mensagens são bloqueantes.
+
+O diagrama abaixo mostra como as classes do projeto estão estruturadas:
+
+image:blocking-chat.png[]
 
 == Servidor
 

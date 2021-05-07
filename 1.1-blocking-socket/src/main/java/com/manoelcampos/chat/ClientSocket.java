@@ -6,8 +6,8 @@ import java.net.SocketAddress;
 
 /**
  * Permite enviar e receber mensagens por meio de um socket cliente.
- * Tal classe é utilizada tanto pela aplicação cliente {@link BlockingChatClient}
- * quanto pelo servidor {@link BlockingChatServer}.
+ * Tal classe é utilizada tanto pela aplicação cliente {@link BlockingChatClientApp}
+ * quanto pelo servidor {@link BlockingChatServerApp}.
  *
  * <p>O servidor cria uma instância desta classe para cada cliente conectado,
  * assim ele pode mensagens para e receber mensagens de cada cliente.
@@ -17,6 +17,8 @@ import java.net.SocketAddress;
  * @author Manoel Campos da Silva Filho
  */
 public class ClientSocket implements Closeable {
+    private String login;
+
     /**
      * Socket representando a conexão de um cliente com o servidor.
      */
@@ -24,19 +26,19 @@ public class ClientSocket implements Closeable {
 
     /**
      *  Permite ler mensagens recebidas ou enviadas pelo cliente.
-     *  Se o {@link ClientSocket} foi criado pela aplicação {@link BlockingChatServer}, tal atributo permite ao {@link BlockingChatServer}
+     *  Se o {@link ClientSocket} foi criado pela aplicação {@link BlockingChatServerApp}, tal atributo permite ao {@link BlockingChatServerApp}
      *  ler mensagens enviadas pelo cliente.
-     *  Se o {@link ClientSocket} foi criado pela aplicação {@link BlockingChatClient}, tal atributo
-     *  permite ao {@link BlockingChatClient} ler mensagens enviadas pelo servidor.
+     *  Se o {@link ClientSocket} foi criado pela aplicação {@link BlockingChatClientApp}, tal atributo
+     *  permite ao {@link BlockingChatClientApp} ler mensagens enviadas pelo servidor.
      */
     private final BufferedReader in;
 
     /**
      *  Permite enviar mensagens do cliente para o servidor ou do servidor para o cliente.
-     *  Se o {@link ClientSocket} foi criado pela aplicação {@link BlockingChatServer}, tal atributo permite ao {@link BlockingChatServer}
+     *  Se o {@link ClientSocket} foi criado pela aplicação {@link BlockingChatServerApp}, tal atributo permite ao {@link BlockingChatServerApp}
      *  enviar mensagens ao cliente.
-     *  Se o {@link ClientSocket} foi criado pela aplicação {@link BlockingChatClient}, tal atributo
-     *  permite ao {@link BlockingChatClient} enviar mensagens ao servidor.
+     *  Se o {@link ClientSocket} foi criado pela aplicação {@link BlockingChatClientApp}, tal atributo
+     *  permite ao {@link BlockingChatClientApp} enviar mensagens ao servidor.
      */
     private final PrintWriter out;
 
