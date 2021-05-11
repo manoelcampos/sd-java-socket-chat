@@ -17,8 +17,6 @@ import java.net.SocketAddress;
  * @author Manoel Campos da Silva Filho
  */
 public class ClientSocket implements Closeable {
-    private String login;
-
     /**
      * Socket representando a conexão de um cliente com o servidor.
      */
