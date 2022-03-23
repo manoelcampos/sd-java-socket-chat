@@ -28,7 +28,7 @@ public class BlockingChatClientApp implements Runnable {
 
     /**
      * Objeto para capturar dados do teclado e assim
-     * permitir que o usuário digite mensages a enviar.
+     * permitir que o usuário digite mensagens a enviar.
      */
     private final Scanner scanner;
     
@@ -77,8 +77,21 @@ public class BlockingChatClientApp implements Runnable {
             "Cliente conectado ao servidor no endereço " + SERVER_ADDRESS +
             " e porta " + BlockingChatServerApp.PORT);
 
+        login();
+
         new Thread(this).start();
         messageLoop();
+    }
+
+    /**
+     * Executa o login no sistema, enviando o login digitado para o servidor.
+     * A primeira mensagem que o servidor receber após um cliente conectar é então o login daquele cliente.
+     */
+    private void login() {
+        System.out.print("Digite seu login: ");
+        final String login = scanner.nextLine();
+        clientSocket.setLogin(login);
+        clientSocket.sendMsg(login);
     }
 
     /**
@@ -113,7 +126,7 @@ public class BlockingChatClientApp implements Runnable {
     public void run() {
         String msg;
         while((msg = clientSocket.getMessage())!=null) {
-            System.out.println("Servidor diz: " + msg);
+            System.out.println(msg);
         }
     }
 }

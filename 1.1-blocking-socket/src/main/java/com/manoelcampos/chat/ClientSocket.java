@@ -18,6 +18,11 @@ import java.net.SocketAddress;
  */
 public class ClientSocket implements Closeable {
     /**
+     * Login do cliente.
+     */
+    private String login;
+
+    /**
      * Socket representando a conexão de um cliente com o servidor.
      */
     private final Socket socket;
@@ -44,7 +49,7 @@ public class ClientSocket implements Closeable {
      * Instancia um ClientSocket.
      *
      * @param socket socket que representa a conexão do cliente com o servidor.
-     * @throws IOException quando não for possível obter 
+     * @throws IOException quando não for possível obter
      *         os objetos {@link #in} ou {@link #out} que permitem,
      *         respectivamente, receber e enviar mensagens pelo socket.
      *         Tal erro pode ocorrer quando, por exemplo, a conexão com o servidor cair
@@ -78,6 +83,14 @@ public class ClientSocket implements Closeable {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public void setLogin(final String login) {
+        this.login = login;
+    }
+
+    public String getLogin() {
+        return login;
     }
 
     /**

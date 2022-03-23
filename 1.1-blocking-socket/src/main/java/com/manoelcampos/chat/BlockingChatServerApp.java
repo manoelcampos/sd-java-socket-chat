@@ -2,6 +2,7 @@ package com.manoelcampos.chat;
 
 import java.io.*;
 import java.net.ServerSocket;
+import java.net.SocketAddress;
 import java.net.SocketException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -62,7 +63,6 @@ public class BlockingChatServerApp {
         System.out.println(
                 "Servidor de chat bloqueante iniciado no endereço " + serverSocket.getInetAddress().getHostAddress() +
                 " e porta " + PORT);
-
         clientConnectionLoop();
     }
 
@@ -117,6 +117,7 @@ public class BlockingChatServerApp {
      * Método executado sempre que um cliente conectar ao servidor.
      * O método fica em loop aguardando mensagens do cliente,
      * até que este desconecte.
+     * A primeira mensagem que o servidor receber após um cliente conectar é o login enviado pelo cliente.
      * 
      * @param clientSocket socket do cliente, por meio do qual o servidor
      *                     pode se comunicar com ele.
@@ -125,11 +126,20 @@ public class BlockingChatServerApp {
         try {
             String msg;
             while((msg = clientSocket.getMessage()) != null){
-                System.out.println("Mensagem recebida do cliente "+ clientSocket.getRemoteSocketAddress() +": " + msg);
-
+                final SocketAddress clientIP = clientSocket.getRemoteSocketAddress();
                 if("sair".equalsIgnoreCase(msg)){
                     return;
                 }
+
+                if(clientSocket.getLogin() == null){
+                    clientSocket.setLogin(msg);
+                    System.out.println("Cliente "+ clientIP + " logado como " + clientSocket.getLogin() +".");
+                    msg = "Cliente " + clientSocket.getLogin() + " logado.";
+                }
+                else {
+                    System.out.println("Mensagem recebida de "+ clientSocket.getLogin() +": " + msg);
+                    msg = clientSocket.getLogin() + " diz: " + msg;
+                };
 
                 sendMsgToAll(clientSocket, msg);
             }
@@ -145,7 +155,7 @@ public class BlockingChatServerApp {
      * <p>
      * Usa um iterator para permitir percorrer a lista de clientes conectados.
      * Neste caso não é usado um for pois, como estamos removendo um cliente
-     * da lista caso não consegamos enviar mensagem pra ele (pois ele já
+     * da lista caso não consigamos enviar mensagem pra ele (pois ele já
      * desconectou), se fizermos isso usando um foreach, ocorrerá
      * erro em tempo de execução. Um foreach não permite percorrer e modificar
      * uma lista ao mesmo tempo. Assim, a forma mais segura de fazer
